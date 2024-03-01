@@ -38,12 +38,12 @@ export default class UsersController {
             // d=save data to mongoDB
             await newuser.save();
              res.status(500).json({
-                status: "Success",
                 Message: "User Registration  goes Well",
-                user: newuser
             })
         } catch (error) {
-            console.log("Internal srver Error !");
+            res.status(500).json({
+              Message: "User Not Registered"
+            })
         }
     }
 
@@ -62,8 +62,7 @@ export default class UsersController {
           });
         } catch (error: any) {
           res.status(500).json({
-            status: "error",
-            message: error.message,
+            message: "No user Found :)",
           });
         }
       }
@@ -84,8 +83,7 @@ export default class UsersController {
           });
         } catch (error: any) {
           res.status(500).json({
-            status: "error",
-            message: error.message,
+            message: "User Not found :)",
           });
         }
       }
@@ -114,7 +112,6 @@ export default class UsersController {
           });
         } catch (error: any) {
           res.status(500).json({
-            status: "error",
             message: error.message,
           });
         }

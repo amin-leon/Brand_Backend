@@ -6,6 +6,7 @@ export interface IUser extends Document {
   secondName: string;
   email: string;
   password: string;
+  role: string,
   comparePassword: (userpassword: string) => boolean;
 }
 
@@ -26,6 +27,10 @@ const userSchema = new Schema<IUser>({
   password: {
     type: String,
     required: true,
+  },
+  role: {
+    type: String,
+    default: "user"
   },
 });
 
