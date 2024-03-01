@@ -6,11 +6,11 @@ export interface IUser extends Document {
   secondName: string;
   email: string;
   password: string;
-  comparePassword: (enteredPassword: string) => boolean;
+  comparePassword: (userpassword: string) => boolean;
 }
 
 const userSchema = new Schema<IUser>({
-    firstName: {
+  firstName: {
     type: String,
     required: true,
   },
@@ -29,8 +29,8 @@ const userSchema = new Schema<IUser>({
   },
 });
 
-userSchema.methods.comparePassword = async function (enteredPassword: string) {
-  return await bcrypt.compare(enteredPassword, this.password);
+userSchema.methods.comparePassword = async function (userpassword: string) {
+  return await bcrypt.compare(userpassword, this.password);
 };
 
 const Users = mongoose.model("Users", userSchema);

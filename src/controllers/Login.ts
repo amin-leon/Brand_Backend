@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/Users';
+import jwt, {Secret}  from "jsonwebtoken";
 
 
 export default class loginController {
@@ -16,20 +17,21 @@ export default class loginController {
         });
       }
 
-      
         if (user && (await user.comparePassword(password))) {
+          // generate token
+          // const userForToken = user.toJSON()
+          const secetKey: Secret = process.env.SECRET_KEY as string;
+          const token = jwt.sign(user.toJSON(), secetKey , {expiresIn: '1d'})
             res.status(201).json({
             Message: "Login successful",
-            id: user._id,
-            name: user.firstName,
-            email: user.email,
+            token
             });
         } else {
             res.status(401).json({ message: "User not found / password incorrect" });
         }
         
     } catch (error: any) {
-        console.log("Internal server error (..)")
+        console.log(error)
     }
   }
 }

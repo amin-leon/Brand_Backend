@@ -68,7 +68,7 @@ export default class UsersController {
         }
       }
 
-          // Get all users
+    // Get all users
     static async getSingleUser(req: Request, res: Response) {
         try {
           const {id} = req.params;
