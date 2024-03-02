@@ -8,6 +8,9 @@ import BlogsRoutes from './routes/Blogs';
 import ProjectsRoutes from './routes/Projects';
 import SkillsRoutes from './routes/Skills';
 import MessagesRoutes from './routes/Messages';
+import SubsRoutes from './routes/Subs';
+
+
 
 const app = express()
 
@@ -25,6 +28,7 @@ app.use('/blogs', BlogsRoutes);
 app.use('/projects', ProjectsRoutes);
 app.use('/skills', SkillsRoutes);
 app.use('/messages', MessagesRoutes);
+app.use('/subscribers', SubsRoutes);
 
 
 const port = process.env.PORT || 5000;

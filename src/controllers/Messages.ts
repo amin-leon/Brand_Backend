@@ -107,7 +107,7 @@ export default class MessagesController {
                     Message: "You have Read this message"
                   });
             } catch (error: any) {
-                console.log(error)
+                console.log(error);
               return res.status(500).json({
                 message: "Enable to read this message",
               });
