@@ -15,7 +15,8 @@ interface Blog {
 export default class BlogsController {
     static async createNewBlog(req: Request, res: Response){
         try {
-            const { title, category, desc, tag, image }: Blog = req.body;
+            const { title, category, desc, tag }: Blog = req.body;
+            const image = req.file? req.file.path: null
 
             if(!title || !category || !desc || !tag ){
                 return res.status(400).json({
