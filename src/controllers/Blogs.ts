@@ -1,16 +1,7 @@
 import { Request, Response } from "express";
 import Blogs from "../models/Blogs";
+import Blog from "../types/Blog";
 
-
-
-interface Blog {
-    title: string,
-    category: string,
-    desc: string,
-    tag: string,
-    image?: string,
-
-}
 
 export default class BlogsController {
     static async createNewBlog(req: Request, res: Response){
@@ -53,11 +44,12 @@ export default class BlogsController {
     // Update blog
     static async updateBlog(req: Request, res: Response) {
         try {
-            req.body as Blog;
+            const {title, desc, category, tag}: Blog = req.body;
             const {id}  = req.params;
+            const image = req.file? req.file.path: null
 
             // find related blog
-            const foundBlogAndUpdate = await Blogs.findByIdAndUpdate(id, req.body, {new: true});
+            const foundBlogAndUpdate = await Blogs.findByIdAndUpdate(id, {tag, image, desc, title, category}, {new: true});
             if (!foundBlogAndUpdate) {
                 return res.status(404).json({
                     status: "Not found",
@@ -185,4 +177,47 @@ export default class BlogsController {
             })
         }
     }
+
+        
+    // Get all blogs
+    static async getAllBlogs(req: Request, res: Response) {
+        try {
+          const allBlogs = await Blogs.find().select("-password");
+          if(!allBlogs){
+            res.status(404).json({
+                Message: "No Project Found :)"
+            })
+          }
+           res.status(200).json({
+            status: "sucess",
+            data: allBlogs,
+          });
+        } catch (error) {
+          res.status(500).json({
+            status: "status",
+            message: "Unable to display Blogs:)",
+          });
+        }
+      }
+
+    // Get signgle Blog
+    static async getSingleBlog(req: Request, res: Response) {
+        try {
+          const {id} = req.params;
+          const singleBlog = await Blogs.findOne({_id: id});
+          if(!singleBlog){
+            res.status(404).json({
+                Message: "No Blog Found :)"
+            })
+          }
+           res.status(200).json({
+            status: "sucess",
+            userInfo: singleBlog,
+          });
+        } catch (error) {
+          res.status(500).json({
+            message: "Unable to find Blog :)",
+          });
+        }
+      }
 }

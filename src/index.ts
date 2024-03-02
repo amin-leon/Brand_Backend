@@ -5,6 +5,9 @@ import connectDB from './config/database';
 import UsersRoutes from './routes/userRegistration';
 import LoginRoutes from './routes/Login';
 import BlogsRoutes from './routes/Blogs';
+import ProjectsRoutes from './routes/Projects';
+import SkillsRoutes from './routes/Skills';
+
 
 const app = express()
 
@@ -19,7 +22,8 @@ dotenv.config();
 app.use('/users', UsersRoutes);
 app.use('/', LoginRoutes);
 app.use('/blogs', BlogsRoutes);
-
+app.use('/projects', ProjectsRoutes);
+app.use('/skills', SkillsRoutes);
 
 const port = process.env.PORT || 5000;
 
