@@ -1,19 +1,34 @@
 import mongoose ,{Schema, Model, Document} from "mongoose";
 
-interface IBlog extends Document{
-    title: string,
-    blogDesc: string,
-    category: string,
-    tags: string,
-    image?: string
+
+type TLikes = {
+    email: string
 }
+
+type TComments = {
+    email: string,
+    comment: string
+}
+
+interface IBlog extends Document{
+    tiitle: string,
+    category: string,
+    desc: string,
+    tag: string,
+    image?: string,
+    likes: TLikes[],
+    comments: TComments[],
+    createdAt: string
+}
+
+
 
 const BlogSchema = new Schema({
     title: {
         type: String,
         require: true
     },
-    blogDesc: {
+    desc: {
         type: String,
         require: true
     },
@@ -21,12 +36,24 @@ const BlogSchema = new Schema({
         type: String,
         require: true
     },
-    tags: {
+    tag: {
         type: String,
         require: true
     },
     image: {
         type: String,
+    },
+    likes: {
+        type: [{email: String}],
+        default: []
+    },
+    comments: {
+        type: [{email: String, comment: String}],
+        default: []
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now()
     }
 })
 
