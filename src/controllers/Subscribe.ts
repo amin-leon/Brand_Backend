@@ -15,7 +15,7 @@ export default class SubscribersController {
                 })
             }
 
-            const alreadySub = await Subscribers.findOne(email)
+            const alreadySub = await Subscribers.findOne({email: email});
             if(alreadySub){
                 return res.status(200).json({
                     Message: "You have Already Subsribed!"

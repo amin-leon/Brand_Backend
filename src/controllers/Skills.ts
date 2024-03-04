@@ -1,6 +1,7 @@
 import {Request, Response} from 'express';
 import { SkillsTypes } from '../types/Skills';
 import Skills from '../models/Skills';
+import skillSchema from '../validations/SkillsValidations';
 
 export default class SkillsController {
     static async addNewSkill(req: Request, res: Response) {
@@ -8,11 +9,13 @@ export default class SkillsController {
             const {title, description, percent}: SkillsTypes = req.body;
             const icon = req.file? req.file.path : null;
     
-            if(!title || !description || !icon || !percent){
+            // validations
+            const { error } = skillSchema.validate(req.body);
+            if (error) {
                 return res.status(400).json({
                     status: "Bad Request",
-                    Message: "Missing required field"
-                })
+                    message: error.details[0].message,
+                });
             }
     
             // Project object

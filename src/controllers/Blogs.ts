@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Blogs from "../models/Blogs";
 import Blog from "../types/Blog";
+import blogSchema from "../validations/BlogValidations";
 
 
 export default class BlogsController {
@@ -9,10 +10,11 @@ export default class BlogsController {
             const { title, category, desc, tag }: Blog = req.body;
             const image = req.file? req.file.path: null
 
-            if(!title || !category || !desc || !tag ){
+            const { error } = blogSchema.validate(req.body);
+            if (error) {
                 return res.status(400).json({
                     status: "Bad Request",
-                    Message: "Missing required fields"
+                    message: error.details[0].message,
                 });
             }
 

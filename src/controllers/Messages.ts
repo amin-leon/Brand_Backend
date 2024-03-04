@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import Messages from "../models/Messages";
 import { MessagesTypes } from "../types/Messages";
+import messageSchema from "../validations/MessagesValitions";
 
 
 // User Registration
@@ -8,11 +9,14 @@ export default class MessagesController {
     static async sendMessage(req: Request, res: Response){
         try {
             const { subject, message, email }: MessagesTypes = req.body;
-            if(!subject || !message || !email){
-               return res.status(400).json({
-                    status: "Bad request",
-                    message: "Nissing fields value!"
-                })
+            
+            // validations
+            const { error } = messageSchema.validate(req.body);
+            if (error) {
+                return res.status(400).json({
+                    status: "Bad Request",
+                    message: error.details[0].message,
+                });
             }
 
             // new message object

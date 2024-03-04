@@ -1,18 +1,21 @@
 import {Request, Response} from 'express';
 import { ProjectTypes } from '../types/Project';
 import Projects from '../models/Projects';
+import projectSchema from '../validations/projectsValidations';
 
 export default class ProjectsController {
     static async addNewProject(req: Request, res: Response) {
         try {
             const {title, category, description, link}: ProjectTypes = req.body;
             const image = req.file? req.file.path : null;
-    
-            if(!title || !category || !description || !image || !link){
+            
+            // validations
+            const { error } = projectSchema.validate(req.body);
+            if (error) {
                 return res.status(400).json({
                     status: "Bad Request",
-                    Message: "Missing required field"
-                })
+                    message: error.details[0].message,
+                });
             }
     
             // Project object
@@ -44,7 +47,17 @@ export default class ProjectsController {
             try {
                 const {title, description, category, link}: ProjectTypes = req.body;
                 const {id}  = req.params;
-                const image = req.file? req.file.path: null
+                const image = req.file? req.file.path: null;
+
+
+                // validations
+                const { error } = projectSchema.validate(req.body);
+                if (error) {
+                    return res.status(400).json({
+                        status: "Bad Request",
+                        message: error.details[0].message,
+                    });
+                }
     
                 // find related blog
                 const foundProjectAndUpdate = await Projects.findByIdAndUpdate(id, {title, description, category, image, link}, {new: true});

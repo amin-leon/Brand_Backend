@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import Users  from "../models/Users";
 import bcrypt from 'bcrypt'
+import userSchema from "../validations/RegisterValidations";
 
 interface User{
     firstName: string,
@@ -17,15 +18,23 @@ export default class UsersController {
             const { firstName, secondName, email, password, role }: User = req.body;
             const existanceOfuser = await Users.findOne({email: email});
             if(existanceOfuser){
-                res.status(400).json({
+                return res.status(400).json({
                     status: "Registraction Failed",
                     message: "Email already exist !"
                 })
             }
 
-            const hashedPassword = bcrypt.hashSync(password, 10)
+            const { error } = userSchema.validate(req.body);
+            if(error){
+              return res.status(400).json({
+                status: "Bad request",
+                Message: error.details[0].message
+                // Message: "Password can be have 1 uppercase retter, at least digit and special char"
+              })
+            }
 
             // new user object
+            const hashedPassword = bcrypt.hashSync(password, 10)
             const newuser = new Users(
                 {
                     firstName,
@@ -37,11 +46,11 @@ export default class UsersController {
             );
             // d=save data to mongoDB
             await newuser.save();
-             res.status(500).json({
+             return res.status(500).json({
                 Message: "User Registration  goes Well",
             })
         } catch (error) {
-            res.status(500).json({
+            return res.status(500).json({
               Message: "User Not Registered"
             })
         }
@@ -98,20 +107,30 @@ export default class UsersController {
             updatedInfo.password = bcrypt.hashSync(updatedInfo.password, 10);
           }
 
+          const { error } = userSchema.validate(req.body);
+          if(error){
+            return res.status(400).json({
+              status: "Bad request",
+              Message: error.details[0].message
+              // Message: "Password can be have 1 uppercase retter, at least digit and special char"
+            })
+          }
+          
+
           const updatedUser = await Users.findByIdAndUpdate(id, updatedInfo, {new: true});
           if(!updatedUser){
-            res.status(404).json({
+            return res.status(404).json({
                 Message: "No User Found :)"
             })
           }
 
-           res.status(200).json({
+          return res.status(200).json({
             status: "sucess",
             Message: "User updated Well !",
             userInfo: updatedUser,
           });
         } catch (error: any) {
-          res.status(500).json({
+          return res.status(500).json({
             message: error.message,
           });
         }
@@ -124,20 +143,20 @@ export default class UsersController {
             // check if user exist
             const existUser = await Users.findById(id);
             if(!existUser){
-                res.status(404).json({
+                return res.status(404).json({
                     Message: "User not Found"
                 })
             }
 
             // delete user
             await Users.findByIdAndDelete(id);
-            res.status(200).json({
+            return res.status(200).json({
                 Message: "User deleted successfully",
                 deleted: existUser
             })
 
         } catch (error: any) {
-            res.status(500).json({
+          return res.status(500).json({
                 Message: error.message
             })
         }
