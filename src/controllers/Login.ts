@@ -27,7 +27,7 @@ export default class loginController {
             token
             });
         } else {
-           return  res.status(401).json({ message: "User not found / password incorrect" });
+           return  res.status(401).json({ message: "Password incorrect :)" });
         }
         
     } catch (error: any) {

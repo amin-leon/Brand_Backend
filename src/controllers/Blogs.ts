@@ -126,7 +126,7 @@ export default class BlogsController {
             }
     
             // like
-            foundBlog.likes.push({email})
+            foundBlog.likes.push(email)
             await foundBlog.save()
     
             return res.status(200).json({

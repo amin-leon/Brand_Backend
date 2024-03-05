@@ -44,7 +44,7 @@ const BlogSchema = new Schema({
         type: String,
     },
     likes: {
-        type: [{email: String}],
+        type: [String],
         default: []
     },
     comments: {
