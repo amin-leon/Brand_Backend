@@ -186,16 +186,16 @@ export default class BlogsController {
         try {
           const allBlogs = await Blogs.find().select("-password");
           if(!allBlogs){
-            res.status(404).json({
+            return res.status(404).json({
                 Message: "No Project Found :)"
             })
           }
-           res.status(200).json({
-            status: "sucess",
+           return res.status(200).json({
+            status: "success",
             data: allBlogs,
           });
         } catch (error) {
-          res.status(500).json({
+          return res.status(500).json({
             status: "status",
             message: "Unable to display Blogs:)",
           });
