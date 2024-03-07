@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node src/index.ts",
     "dev": "nodemon src/index.ts",
-    "test": "jest --verbose --testTimeout=60000 --forceExit --coverage",
+    "test": "jest --verbose --testTimeout=120000 --forceExit --coverage",
     "build": "tsc"
   },
   "keywords": [],

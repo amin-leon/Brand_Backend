@@ -79,7 +79,6 @@ export default class MessagesController {
             })
 
         } catch (error: any) {
-            console.log(error.message);
             return res.status(500).json({
                 status: "Fail",
                 Message: "Fail to delete message"
@@ -113,8 +112,7 @@ export default class MessagesController {
                         status: "Success",
                         Message: "You have Read this message"
                     });
-                } catch (error) {
-                    console.error(error);
+                } catch (error: any) {
                     return res.status(500).json({
                         status: "Error",
                         Message: "Failed to update message"

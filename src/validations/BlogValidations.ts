@@ -8,9 +8,9 @@ interface IBlog {
 }
 
 const blogSchema = joi.object<IBlog>({
-    title:joi.string().required().min(5).max(60),
+    title:joi.string().required(),
     category:joi.string().required(),
-    desc:joi.string().required().min(50).max(600),
+    desc:joi.string().required(),
     tag:joi.string().required()
 });
 

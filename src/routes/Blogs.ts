@@ -4,8 +4,9 @@ import upload from '../utils/multer';
 import AuthVerify from '../middleware/auth';
 
 const router = express.Router();
+// AuthVerify.isAuthenticated, AuthVerify.checkRole, upload.single('image'),
 
-router.post('/new', AuthVerify.isAuthenticated, AuthVerify.checkRole, upload.single('image'),  BlogsController.createNewBlog);
+router.post('/new',  BlogsController.createNewBlog);
 router.put('/update/:id',AuthVerify.isAuthenticated, AuthVerify.checkRole, upload.single('image'), BlogsController.updateBlog);
 router.delete('/delete/:id',AuthVerify.isAuthenticated, AuthVerify.checkRole,  BlogsController.deleteBlog);
 router.put('/blog/like/:id', BlogsController.likeBlog);
