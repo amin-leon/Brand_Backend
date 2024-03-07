@@ -32,7 +32,10 @@ export default class AuthVerify{
 
             next()
         } catch (error: any) {
-            console.log("Internal server error");
+             res.status(500).json({
+                status: "Fail",
+                Message: "Invalid  or Expired, Login again"
+            })
         }
     }
 
