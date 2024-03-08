@@ -81,7 +81,7 @@ export default class BlogsController {
             if(!foundBlog){
                 return res.status(404).json({
                     status: "Not found",
-                    Message:"Blog Not found :)"
+                    Message:"Blog not found"
                 })
             }
 
@@ -89,8 +89,7 @@ export default class BlogsController {
             await Blogs.findByIdAndDelete(id);
             return res.status(200).json({
                 status: "OK",
-                Message: "Blog deleted !",
-                id: id
+                Message: "Blog deleted successfully",
             })
         } catch (error) {
             return res.status(500).json({
@@ -133,7 +132,6 @@ export default class BlogsController {
                 Message: "You liked Blog"
             })
         } catch (error) {
-            console.log(error)
             return res.status(500).json({
                 status: "Fail",
                 Message: "Oops! , unable to like"
@@ -171,7 +169,6 @@ export default class BlogsController {
                 Message: "Blog commented"
             })
         } catch (error) {
-            console.log(error)
             return res.status(500).json({
                 status: "Fail",
                 Message: "Oops! , unable to comment"
@@ -183,12 +180,12 @@ export default class BlogsController {
     // Get all blogs
     static async getAllBlogs(req: Request, res: Response) {
         try {
-          const allBlogs = await Blogs.find().select("-password");
-          if(!allBlogs){
+          const allBlogs = await Blogs.find();
+          if (allBlogs.length === 0) {
             return res.status(404).json({
-                Message: "No Project Found :)"
-            })
-          }
+                Message: "No blogs found :)"
+            });
+        }
            return res.status(200).json({
             status: "success",
             data: allBlogs,
@@ -207,16 +204,18 @@ export default class BlogsController {
           const {id} = req.params;
           const singleBlog = await Blogs.findOne({_id: id});
           if(!singleBlog){
-            res.status(404).json({
+            return res.status(404).json({
+                status: "Not found",
                 Message: "No Blog Found :)"
             })
           }
-           res.status(200).json({
-            status: "sucess",
+           return res.status(200).json({
+            status: "success",
             userInfo: singleBlog,
           });
         } catch (error) {
-          res.status(500).json({
+          return res.status(500).json({
+            status: "Fail",
             message: "Unable to find Blog :)",
           });
         }

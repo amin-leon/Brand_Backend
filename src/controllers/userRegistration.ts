@@ -8,19 +8,18 @@ interface User{
     secondName: string,
     email: string,
     password: string,
-    role: string
 }
 
 // User Registration
 export default class UsersController {
     static async userRegistration(req: Request, res: Response){
         try {
-            const { firstName, secondName, email, password, role }: User = req.body;
+            const { firstName, secondName, email, password }: User = req.body;
             const existanceOfuser = await Users.findOne({email: email});
             if(existanceOfuser){
-                return res.status(400).json({
+                return res.status(403).json({
                     status: "Registraction Failed",
-                    message: "Email already exist !"
+                    Message: "Email already exist !"
                 })
             }
 
@@ -28,8 +27,7 @@ export default class UsersController {
             if(error){
               return res.status(400).json({
                 status: "Bad request",
-                Message: error.details[0].message
-                // Message: "Password can be have 1 uppercase retter, at least digit and special char"
+                Message: "Missing Field(s)"
               })
             }
 
@@ -41,12 +39,11 @@ export default class UsersController {
                     secondName,
                     email,
                     password: hashedPassword,
-                    role
                 }
             );
             // d=save data to mongoDB
             await newuser.save();
-             return res.status(500).json({
+             return res.status(201).json({
                 Message: "User Registration  goes Well",
             })
         } catch (error) {
@@ -59,24 +56,24 @@ export default class UsersController {
     // Get all users
     static async getAllUsers(req: Request, res: Response) {
         try {
-          const allusers = await Users.find().select("-password");
+          const allusers = await Users.find();
           if(!allusers){
             res.status(404).json({
                 Message: "No User Found :)"
             })
           }
            res.status(200).json({
-            status: "sucess",
+            status: "success",
             data: allusers,
           });
         } catch (error: any) {
           res.status(500).json({
-            message: "No user Found :)",
+            message: "Fail to fetch users",
           });
         }
       }
 
-    // Get all users
+    // Get single user
     static async getSingleUser(req: Request, res: Response) {
         try {
           const {id} = req.params;
@@ -87,12 +84,12 @@ export default class UsersController {
             })
           }
            res.status(200).json({
-            status: "sucess",
+            status: "success",
             userInfo: singleUser,
           });
         } catch (error: any) {
           res.status(500).json({
-            message: "User Not found :)",
+            message: "Fail to fecth user",
           });
         }
       }
@@ -112,7 +109,6 @@ export default class UsersController {
             return res.status(400).json({
               status: "Bad request",
               Message: error.details[0].message
-              // Message: "Password can be have 1 uppercase retter, at least digit and special char"
             })
           }
           

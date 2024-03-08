@@ -12,17 +12,16 @@ export default class loginController {
       const user = await User.findOne({ email });
       if (!user) {
          return res.status(404).json({
-          status: "fail",
-          message: "Account does not exist",
+          status: "Fail",
+          Message: "Account does not exist",
         });
       }
 
         if (user && (await user.comparePassword(password))) {
           // generate token
-          // const userForToken = user.toJSON()
           const secetKey: Secret = process.env.SECRET_KEY as string;
-          const token = jwt.sign(user.toJSON(), secetKey , {expiresIn: '1d'})
-            return res.status(201).json({
+          const token = jwt.sign(user.toJSON(), secetKey , {expiresIn: '7d'})
+          return res.status(200).json({
             Message: "Login successful",
             token
             });
@@ -31,7 +30,6 @@ export default class loginController {
         }
         
     } catch (error: any) {
-        console.log(error)
         return res.status(500).json({
           status: "Bad request",
           Message: "Fail to login"
