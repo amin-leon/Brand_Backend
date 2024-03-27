@@ -9,15 +9,18 @@ import ProjectsRoutes from './routes/Projects';
 import SkillsRoutes from './routes/Skills';
 import MessagesRoutes from './routes/Messages';
 import SubsRoutes from './routes/Subs';
+import cors from 'cors';
 
 
 export const app = express()
 
 app.use(express.json())
+app.use(cors());
 app.use('/uploads', express.static('uploads'));
 connectDB()
 
 dotenv.config();
+
 
 // routes
 app.use('/users', UsersRoutes);
