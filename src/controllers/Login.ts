@@ -23,6 +23,7 @@ export default class loginController {
           const token = jwt.sign(user.toJSON(), secetKey , {expiresIn: '7d'})
           return res.status(200).json({
             Message: "Login successful",
+            user,
             token
             });
         } else {
