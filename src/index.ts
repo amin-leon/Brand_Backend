@@ -1,7 +1,7 @@
 // server development
 import express from 'express'
 import dotenv from 'dotenv'
-//import connectDB from './config/database';
+import connectDB from './config/database';
 import UsersRoutes from './routes/userRegistration';
 import LoginRoutes from './routes/Login';
 import BlogsRoutes from './routes/Blogs';
@@ -15,8 +15,7 @@ export const app = express()
 
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
-
-//connectDB()
+connectDB()
 
 dotenv.config();
 

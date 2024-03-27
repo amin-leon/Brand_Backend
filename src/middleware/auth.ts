@@ -13,26 +13,27 @@ export default class AuthVerify{
         try {
             const { authorization }: any = req.headers;
             if(!authorization){
-                res.status(401).json({
-                    Message: "Access Denied!"
+                return res.status(401).json({
+                    Message: "No token Provided in header"
                 });
             }
 
             const token = authorization.split(" ")[1];
 
             if(!token) {
-                res.status(401).json({
+                return res.status(401).json({
                     Message: "Unauthorized action"
                 })
             }
             // Verify token
             const secretKey: Secret = process.env.SECRET_KEY as string;
             const user = jwt.verify(token, secretKey);
-            req.user = user;
+             req.user = user;
+             return req.user
 
             next()
         } catch (error: any) {
-             res.status(500).json({
+            return res.status(500).json({
                 status: "Fail",
                 Message: "Invalid  or Expired, Login again"
             })
@@ -46,11 +47,13 @@ export default class AuthVerify{
             if(user.role == "Admin"){
                return next()
             }
-            res.status(403).json({
+           return res.status(403).json({
                 message: "Only admin can access this route"
             });
         } catch (error: any) {
-                console.log(error);
+                return res.status(500).json({
+                    Message: "Fail to verify role"
+                })
         }
     }
 }
