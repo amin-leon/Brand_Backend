@@ -116,7 +116,7 @@ export default class UsersController {
           const updatedUser = await Users.findByIdAndUpdate(id, updatedInfo, {new: true});
           if(!updatedUser){
             return res.status(404).json({
-                Message: "No User Found :)"
+                Message: "No User Found"
             })
           }
 
