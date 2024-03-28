@@ -10,11 +10,12 @@ export default class ProjectsController {
             const image = req.file? req.file.path : null;
             
             // validations
-            const { error } = projectSchema.validate(req.body);
+            const { error } = projectSchema.validate({title, description, category, image, link});
             if (error) {
                 return res.status(400).json({
                     status: "Bad Request",
                     message: error.details[0].message,
+                    res: req.body
                 });
             }
     
