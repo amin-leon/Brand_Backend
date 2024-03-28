@@ -76,15 +76,15 @@ export default class BlogsController {
 
     static async deleteBlog(req: Request, res: Response) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
             const foundBlog = await Blogs.findById(id)
-            if(!foundBlog){
+            if (!foundBlog) {
                 return res.status(404).json({
                     status: "Not found",
-                    Message:"Blog not found"
+                    Message: "Blog with ID not found"
                 })
             }
-
+    
             // remove this blog with id
             await Blogs.findByIdAndDelete(id);
             return res.status(200).json({
@@ -92,12 +92,14 @@ export default class BlogsController {
                 Message: "Blog deleted successfully",
             })
         } catch (error) {
+            console.error(error);
             return res.status(500).json({
                 status: "Fail",
-                Message: "Fail to delete blog"
+                Message: "Failed to delete blog"
             })
         }
     }
+    
 
     // like a blog
 
