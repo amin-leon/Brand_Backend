@@ -131,7 +131,8 @@ export default class BlogsController {
     
             return res.status(200).json({
                 status: "OK",
-                Message: "You liked Blog"
+                Message: "You liked Blog",
+                foundBlog
             })
         } catch (error) {
             return res.status(500).json({
@@ -145,7 +146,7 @@ export default class BlogsController {
 
     static async commentBlog(req: Request, res: Response) {
         try {
-            const {email, comment}  = req.body;
+            const {email, comment, posterNames}  = req.body;
             const {id} = req.params;
     
             // find blog
@@ -163,7 +164,7 @@ export default class BlogsController {
                     Message: "Missing value for fields"
                 })
             }
-            foundBlog.comments.push({email, comment});
+            foundBlog.comments.push({email, comment, posterNames});
             await foundBlog.save()
     
             return res.status(200).json({

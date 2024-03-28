@@ -7,7 +7,8 @@ type TLikes = {
 
 type TComments = {
     email: string,
-    comment: string
+    comment: string,
+    posterNames: string
 }
 
 interface IBlog extends Document{
@@ -48,7 +49,7 @@ const BlogSchema = new Schema({
         default: []
     },
     comments: {
-        type: [{email: String, comment: String}],
+        type: [{email: String, comment: String, posterNames: String}],
         default: []
     },
     createdAt: {
