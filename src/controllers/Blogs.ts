@@ -101,49 +101,53 @@ export default class BlogsController {
     }
     
 
-    // like a blog
+// like a blog
+static async likeBlog(req: Request, res: Response) {
+    try {
+        const { email } = req.body;
+        const { id } = req.params;
 
-    static async likeBlog(req: Request, res: Response) {
-        try {
-            const {email}  = req.body;
-            const {id} = req.params;
-    
-            // find blog
-            const foundBlog = await Blogs.findById(id)
-            if(!foundBlog){
-                return res.status(404).json({
-                    status: "Not found",
-                    Message: "Blog Not found"
-                })
-            }
-    
-            const hasLiked = foundBlog.likes.includes(email);
-            if(hasLiked) {
-                return res.status(403).json({
-                    status: "Forbidden",
-                    Message: "You have already liked to this blog :)"
-                })
-            }
-    
-            // like
-            foundBlog.likes.push(email)
-            await foundBlog.save()
-    
-            return res.status(200).json({
-                status: "OK",
-                Message: "You liked Blog",
-                foundBlog
-            })
-        } catch (error) {
-            return res.status(500).json({
-                status: "Fail",
-                Message: "Oops! , unable to like"
+        // find blog
+        const foundBlog = await Blogs.findById(id)
+        if (!foundBlog) {
+            return res.status(404).json({
+                status: "Not found",
+                Message: "Blog Not found"
             })
         }
+
+        const hasLiked = foundBlog.likes.includes(email);
+        if (hasLiked) {
+            // Remove email from likes array
+            foundBlog.likes = foundBlog.likes.filter(e => e !== email);
+            await foundBlog.save();
+
+            return res.status(200).json({
+                status: "OK",
+                Message: "You unliked Blog",
+                foundBlog
+            });
+        }
+
+        // like
+        foundBlog.likes.push(email)
+        await foundBlog.save()
+
+        return res.status(200).json({
+            status: "OK",
+            Message: "You liked Blog",
+            foundBlog
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: "Fail",
+            Message: "Oops! , unable to like"
+        })
     }
+}
+
 
     // comment
-
     static async commentBlog(req: Request, res: Response) {
         try {
             const {email, comment, posterNames}  = req.body;
