@@ -52,7 +52,7 @@ export default class ProjectsController {
 
 
                 // validations
-                const { error } = projectSchema.validate(req.body);
+                const { error } = projectSchema.validate({title, description, category, image, link});
                 if (error) {
                     return res.status(400).json({
                         status: "Bad Request",
@@ -65,7 +65,8 @@ export default class ProjectsController {
                 if (!foundProjectAndUpdate) {
                     return res.status(404).json({
                         status: "Not found",
-                        Message: "Project not found :)"
+                        Message: "Project not found :)",
+                        foundProjectAndUpdate
                     })
                 }
                 return res.status(200).json({
