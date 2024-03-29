@@ -1,16 +1,16 @@
 import { Response, Request } from "express";
 import Messages from "../models/Messages";
-import { MessagesTypes } from "../types/Messages";
+// import { MessagesTypes } from "../types/Messages";
 import messageSchema from "../validations/MessagesValitions";
 
 
 // User Registration
 export default class MessagesController {
-    static async sendMessage(req: Request, res: Response){
+     static async sendMessage(req: Request, res: Response): Promise<Response> {
         try {
-            const { subject, message, email }: MessagesTypes = req.body;
-            
-            // validations
+            const { message, email,names } = req.body;
+
+            // Validate the request body
             const { error } = messageSchema.validate(req.body);
             if (error) {
                 return res.status(400).json({
@@ -19,26 +19,36 @@ export default class MessagesController {
                 });
             }
 
-            // new message object
-            const newMessage = new Messages(
-                {
-                    message,
-                    subject,
-                    email
-                }
-            );
-            // save message 
-            await newMessage.save();
+            // Check if sender's email exists in messages
+            let existingMessage = await Messages.findOne({ email });
+
+            if (!existingMessage) {
+
+                // Create a new message object if sender's email does not exist
+                const newMessage = new Messages({
+                    messages: [message],
+                    email,
+                    names
+                });
+                // Save the new message
+                await newMessage.save();
+            } else {
+                existingMessage.messages.push(message);
+                await existingMessage.save();
+            }
+
             return res.status(201).json({
-                Message: "Message sent !",
-            })
+                Message: "Message sent!",
+            });
         } catch (error) {
-           return res.status(500).json({
-              Message: "Message Not sent :)"
-            })
+            console.log(error)
+            return res.status(500).json({
+                Message: "Message not sent :)",
+                
+            });
         }
     }
-
+    
     // Get all Messages
     static async getAllMessages(req: Request, res: Response) {
         try {

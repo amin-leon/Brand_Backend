@@ -1,20 +1,16 @@
-import mongoose, {Model, Document, Schema} from "mongoose";
+import mongoose, { Model, Document, Schema } from "mongoose";
 
-
-interface IMessages extends Document{
-    subject: String,
-    message: String, 
-    read: Boolean,
-    email: String,
+interface IMessages extends Document {
+    messages: string[];
+    read?: boolean;
+    email: string;
+    sentAt?: Date;
+    names?: string
 }
 
 const MessagesSchema = new Schema({
-    subject: {
-        type: String,
-        required: true
-    },
-    message: {
-        type: String,
+    messages: {
+        type: [String],
         required: true
     },
     email: {
@@ -27,9 +23,13 @@ const MessagesSchema = new Schema({
     },
     sentAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now
     },
-})
+    names: {
+        type: String,
+        required: true
+    }
+});
 
 const Messages: Model<IMessages> = mongoose.model<IMessages>("Messages", MessagesSchema);
 
