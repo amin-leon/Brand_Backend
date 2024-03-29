@@ -10,7 +10,7 @@ export default class SkillsController {
             const icon = req.file? req.file.path : null;
     
             // validations
-            const { error } = skillSchema.validate(req.body);
+            const { error } = skillSchema.validate({title, description, percent, icon});
             if (error) {
                 return res.status(400).json({
                     status: "Bad Request",

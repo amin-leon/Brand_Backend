@@ -8,8 +8,8 @@ interface ISkills {
 }
 
 const skillSchema = joi.object<ISkills>({
-    title:joi.string().required().min(5).max(60),
-    description:joi.string().required().min(50).max(200),
+    title:joi.string().required().min(3).max(60),
+    description:joi.string().required().min(5).max(200),
     icon:joi.string().required(),
     percent:joi.number().required(),
 });
