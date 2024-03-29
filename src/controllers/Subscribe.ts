@@ -11,7 +11,7 @@ export default class SubscribersController {
             if(!email){
                return res.status(400).json({
                     status: "Bad request",
-                    message: "Nissing fields value!"
+                    message: "Mssing fields value!"
                 })
             }
 
@@ -23,15 +23,11 @@ export default class SubscribersController {
             }
 
             // new message object
-            const newSub = new Subscribers(
-                {
-                    email
-                }
-            );
+            const newSub = new Subscribers({email});
             // save sub 
             await newSub.save();
             return res.status(500).json({
-                Message: "You Subscribution sent !",
+                Message: "Your Subscribution sent !",
             })
         } catch (error) {
            return res.status(500).json({
