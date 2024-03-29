@@ -14,6 +14,8 @@ router.post('/new', upload.single('icon'), SkillsController.addNewSkill);
 router.put('/edit/:id',upload.single('icon'), SkillsController.updateSkill);
 router.delete('/delete/:id', SkillsController.deleteSkill);
 router.get('/all', SkillsController.getAllSkills);
+router.get('/:id', SkillsController.getSkillById);
+
 
 
 export default router;

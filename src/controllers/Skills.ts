@@ -98,6 +98,29 @@ export default class SkillsController {
         }
     }
 
+// Get a Single Skill by ID
+static async getSkillById(req: Request, res: Response) {
+    const {id} = req.params
+    try {
+        const skill = await Skills.findById(id);
+        if (!skill) {
+            return res.status(404).json({
+                Message: "Skill not found :)"
+            });
+        }
+        return res.status(200).json({
+            status: "success",
+            data: skill,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: "error",
+            message: "Unable to get Skill details :(",
+        });
+    }
+}
+
+
     
     // Get all Skills
     static async getAllSkills(req: Request, res: Response) {
