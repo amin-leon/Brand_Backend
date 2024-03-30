@@ -10,7 +10,6 @@ export default class MessagesController {
         try {
             const { message, email,names } = req.body;
 
-            // Validate the request body
             const { error } = messageSchema.validate(req.body);
             if (error) {
                 return res.status(400).json({
@@ -19,12 +18,10 @@ export default class MessagesController {
                 });
             }
 
-            // Check if sender's email exists in messages
             let existingMessage = await Messages.findOne({ email });
 
             if (!existingMessage) {
 
-                // Create a new message object if sender's email does not exist
                 const newMessage = new Messages({
                     messages: [message],
                     email,

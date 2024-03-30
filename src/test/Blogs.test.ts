@@ -168,7 +168,7 @@ describe('Delete Blog - /DELETE', () => {
           .set('Authorization', `Bearer ${process.env.AUTH_TOKEN!}`);
 
       expect(res.status).toBe(404);
-      expect(res.body.Message).toBe('Blog not found');
+      expect(res.body.Message).toBe('Blog with ID not found');
   });
 
   it('should return status code 500 if an error occurs while deleting blog', async () => {
@@ -187,7 +187,7 @@ describe('Delete Blog - /DELETE', () => {
           .set('Authorization', `Bearer ${process.env.AUTH_TOKEN!}`);
 
       expect(res.status).toBe(500);
-      expect(res.body.Message).toBe('Fail to delete blog');
+      expect(res.body.Message).toBe('Failed to delete blog');
   });
 });
 

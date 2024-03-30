@@ -1,6 +1,6 @@
 import request from 'supertest';
-import app from '../index'; // assuming your app file is named 'app.js'
-import Users from '../models/Users'; // assuming the model file is named 'Users.js'
+import app from '../index'; // assuming your app file is named 'index.ts'
+import Users from '../models/Users'; // assuming the model file is named 'Users.ts'
 
 describe('User Registration', () => {
     beforeEach(async () => {
@@ -41,7 +41,7 @@ describe('User Registration', () => {
       .post('/users/register')
       .send(existingUser);
 
-    expect(res.status).toBe(403);
+    expect(res.status).toBe(400);
     expect(res.body.Message).toBe('Email already exist !');
   });
 
@@ -110,4 +110,3 @@ describe('Get All Users - /GET', () => {
     expect(res.body.message).toBe('Fail to fetch users');
   });
 });
-

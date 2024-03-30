@@ -92,7 +92,6 @@ export default class BlogsController {
                 Message: "Blog deleted successfully",
             })
         } catch (error) {
-            console.error(error);
             return res.status(500).json({
                 status: "Fail",
                 Message: "Failed to delete blog"

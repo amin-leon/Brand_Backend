@@ -17,7 +17,7 @@ export default class UsersController {
             const { firstName, secondName, email, password }: User = req.body;
             const existanceOfuser = await Users.findOne({email: email});
             if(existanceOfuser){
-                return res.status(403).json({
+                return res.status(400).json({
                     status: "Registraction Failed",
                     Message: "Email already exist !"
                 })

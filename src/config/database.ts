@@ -18,7 +18,7 @@ const connectDB = (dbConnectionString?: string) => {
     });
 
     db.once('open', () => {
-        console.log('MongoDB connected successfully .......');
+        console.log('MongoDB connected.......');
     });
 };
 

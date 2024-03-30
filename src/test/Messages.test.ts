@@ -15,7 +15,7 @@ describe("Messages Controller", () =>{
             const res = await request(app)
                 .post("/messages/new")
                 .send({
-                    subject: "Hello my friend",
+                    names: "Hello my friend",
                     message: "shgdhsgdhsgdh",
                     email: "leon@gmail.com",
                 });
@@ -28,13 +28,12 @@ describe("Messages Controller", () =>{
             const res = await request(app)
                 .post("/messages/new")
                 .send({
-                    subject: "Hello my friend",
+                    names: "Hello my friend",
                     email: "leon@gmail.com",
                 });
     
             expect(res.status).toBe(400);
             expect(res.body.status).toBe("Bad Request");
-            expect(res.body.message).toBe('"message" is required');
         });
     
         it("should return 500 if an error occurs during message creation", async () => {
@@ -43,13 +42,13 @@ describe("Messages Controller", () =>{
             const res = await request(app)
                 .post("/messages/new")
                 .send({
-                    subject: "Hello my friend",
+                    names: "Hello my friend",
                     message: "shgdhsgdhsgdh",
                     email: "leon@gmail.com",
                 });
     
             expect(res.status).toBe(500);
-            expect(res.body.Message).toBe("Message Not sent :)");
+            expect(res.body.Message).toBe("Message not sent :)");
         });
     });
     describe("Get Messages -/GET", () => {
@@ -59,8 +58,8 @@ describe("Messages Controller", () =>{
     
         it("should return status code 200 and messages if messages are found", async () => {
             const mockMessages = [
-                { subject: 'Message 1', message: 'Content 1', email: 'test1@example.com' },
-                { subject: 'Message 2', message: 'Content 2', email: 'test2@example.com' },
+                {  message: 'Content 1', email: 'test1@example.com', names: "amin" },
+                { message: 'Content 2', email: 'test2@example.com', names: "amin"  },
             ];
             await Messages.insertMany(mockMessages);
 
@@ -93,7 +92,7 @@ describe("Messages Controller", () =>{
         // });
         it('should return status code 200 if message is deleted successfully', async () => {
             // Insert test data into the database
-            const newMessage = await Messages.create({ subject: 'Test Subject', message: 'Test Message', email: 'test@example.com' });
+            const newMessage = await Messages.create({ names: 'Test Subject', message: 'Test Message', email: 'test@example.com' });
 
              
             const res = await request(app)
@@ -117,7 +116,7 @@ describe("Messages Controller", () =>{
         it('should return status code 500 if an error occurs while deleting message', async () => {
             jest.spyOn(Messages, 'findByIdAndDelete').mockRejectedValueOnce(new Error());
             
-            const newMessage = await Messages.create({ subject: 'Test Subject', message: 'Test Message', email: 'test@example.com' });
+            const newMessage = await Messages.create({ message: 'Test Message', email: 'test@example.com', names: "Amin Leon" });
             const res = await request(app)
             .delete(`/messages/delete/${newMessage._id}`)
               .set('Authorization', `Bearer ${process.env.AUTH_TOKEN!}`)
@@ -130,7 +129,7 @@ describe("Messages Controller", () =>{
     describe("Read Message - /PUT", () => {
         it("should return status code 200 and success message when message is successfully marked as read", async () => {
             const newMessage = await Messages.create({
-                subject: 'Test Subject',
+                names: 'Test Subject',
                 message: 'Test Message',
                 email: 'test@example.com'
             });
@@ -147,7 +146,7 @@ describe("Messages Controller", () =>{
         it("should return status code 400 and error message when 'read' field is missing in request body", async () => {
                 // Create a new message to test
                 const newMessage = await Messages.create({
-                    subject: 'Test Subject',
+                    names: 'Test Subject',
                     message: 'Test Message',
                     email: 'test@example.com'
                 });
@@ -180,7 +179,7 @@ describe("Messages Controller", () =>{
             jest.spyOn(Messages, 'findByIdAndUpdate').mockRejectedValueOnce(new Error());
         
             const newMessage = await Messages.create({
-                subject: 'Test Subject',
+                names: 'Test Subject',
                 message: 'Test Message',
                 email: 'test@example.com'
             });

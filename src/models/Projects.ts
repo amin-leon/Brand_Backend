@@ -8,7 +8,7 @@ interface IProjects extends Document{
     title: String,
     description: String, 
     category: String,
-    image: String,
+    image?: String,
     link: String,
     languages: Lang[]
 }
@@ -36,7 +36,6 @@ const projectsSchema = new Schema({
     },
     image: {
         type: String,
-        required: true
     },
 })
 

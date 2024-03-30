@@ -5,7 +5,7 @@ interface ISkills extends Document{
     title: String,
     description: String, 
     percent: Number,
-    icon: String,
+    icon?: String,
 }
 
 const skillsSchema = new Schema({
@@ -23,7 +23,6 @@ const skillsSchema = new Schema({
     },
     icon: {
         type: String,
-        required: true
     },
 })
 
