@@ -36,7 +36,7 @@ export default class SkillsController {
             console.log(error)
             return res.status(500).json({
                 status: "Fail",
-                Message: " new Skill Not added :)"
+                Message: "new Skill Not added :)"
             })
         }
     }
@@ -125,17 +125,17 @@ static async getSkillById(req: Request, res: Response) {
     static async getAllSkills(req: Request, res: Response) {
         try {
           const allSkills = await Skills.find();
-          if(!allSkills){
-            res.status(404).json({
-                Message: "No Skill Found :)"
-            })
-          }
-           res.status(200).json({
+          if (allSkills.length === 0) {
+            return res.status(404).json({
+                Message: "No skills found :)"
+            });
+        }
+           return res.status(200).json({
             status: "sucess",
             data: allSkills,
           });
         } catch (error) {
-          res.status(500).json({
+          return res.status(500).json({
             status: "status",
             message: "Unable to display Skills:)",
           });

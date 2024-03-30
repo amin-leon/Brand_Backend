@@ -169,7 +169,7 @@ describe('Delete Blog - /DELETE', () => {
           .set('Authorization', `Bearer ${process.env.AUTH_TOKEN!}`);
 
       expect(res.status).toBe(404);
-      expect(res.body.status).toBe('OK');
+      expect(res.body.status).toBe('Not found');
       expect(res.body.Message).toBe('Project Not found :)');
   });
 
@@ -224,7 +224,7 @@ describe('Get All Projects - /GET', () => {
       const res = await request(app).get('/projects/all');
 
       expect(res.status).toBe(404);
-      expect(res.body.Message).toBe('No Project Found :)');
+      expect(res.body.Message).toBe('No Projects found :)');
   });
 
   it('should return status code 500 if an error occurs while fetching blogs', async () => {
