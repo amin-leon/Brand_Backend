@@ -1,59 +1,59 @@
 import { Request, Response, NextFunction } from "express";
-import jwt, {Secret}  from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-interface AddUserToRequest extends Request{
+interface AddUserToRequest extends Request {
     user?: any;
 }
 
-export default class AuthVerify{
-    static async isAuthenticated(req: AddUserToRequest, res: Response, next: NextFunction){
+export default class AuthVerify {
+    static async isAuthenticated(req: AddUserToRequest, res: Response, next: NextFunction) {
         try {
             const { authorization }: any = req.headers;
-            if(!authorization){
+            if (!authorization) {
                 return res.status(401).json({
-                    Message: "No token Provided in header"
+                    Message: "No token provided in header"
                 });
             }
 
             const token = authorization.split(" ")[1];
 
-            if(!token) {
+            if (!token) {
                 return res.status(401).json({
                     Message: "Unauthorized action"
-                })
+                });
             }
-            // Verify token
-            const secretKey: Secret = process.env.SECRET_KEY as string;
-            const user = jwt.verify(token, secretKey);
-             req.user = user;
-             return req.user
 
-            next()
+            // Verify token
+            const secretKey: Secret = process.env.SECRET_KEY as Secret;
+            const user = jwt.verify(token, secretKey) as any;
+            req.user = user;
+            
+            // Call next middleware
+            return next();
         } catch (error: any) {
             return res.status(500).json({
                 status: "Fail",
-                Message: "Invalid  or Expired, Login again"
-            })
+                Message: "Invalid or expired token, login again"
+            });
         }
     }
 
-    // ckeck role
-    static async checkRole(req: AddUserToRequest, res: Response, next: NextFunction){
+    static async checkRole(req: AddUserToRequest, res: Response, next: NextFunction) {
         try {
             const user = req.user;
-            if(user.role == "Admin"){
-               return next()
+            if (user.role === "admin") {
+                return next();
             }
-           return res.status(403).json({
+            return res.status(403).json({
                 message: "Only admin can access this route"
             });
         } catch (error: any) {
-                return res.status(500).json({
-                    Message: "Fail to verify role"
-                })
+            return res.status(500).json({
+                Message: "Fail to verify role"
+            });
         }
     }
 }

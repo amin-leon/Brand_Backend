@@ -216,7 +216,9 @@
 <a name='L151'></a><a href='#L151'>151</a>
 <a name='L152'></a><a href='#L152'>152</a>
 <a name='L153'></a><a href='#L153'>153</a>
-<a name='L154'></a><a href='#L154'>154</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -237,22 +239,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -264,6 +251,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -281,6 +284,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -381,11 +385,12 @@ export default class ProjectsController {
             const image = <span class="cstat-no" title="statement not covered" >req.file? req.file.path : null;</span>
             
             // validations
-            const { error } = <span class="cstat-no" title="statement not covered" >projectSchema.validate(req.body);</span>
+            const { error } = <span class="cstat-no" title="statement not covered" >projectSchema.validate({title, description, category, image, link});</span>
 <span class="cstat-no" title="statement not covered" >            <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {</span>
 <span class="cstat-no" title="statement not covered" >                return res.status(400).json({</span>
                     status: "Bad Request",
                     message: error.details[0].message,
+                    res: req.body
                 });
             }
     
@@ -422,7 +427,7 @@ export default class ProjectsController {
 &nbsp;
 &nbsp;
                 // validations
-                const { error } = <span class="cstat-no" title="statement not covered" >projectSchema.validate(req.body);</span>
+                const { error } = <span class="cstat-no" title="statement not covered" >projectSchema.validate({title, description, category, image, link});</span>
 <span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {</span>
 <span class="cstat-no" title="statement not covered" >                    return res.status(400).json({</span>
                         status: "Bad Request",
@@ -435,7 +440,8 @@ export default class ProjectsController {
 <span class="cstat-no" title="statement not covered" >                <span class="missing-if-branch" title="if path not taken" >I</span>if (!foundProjectAndUpdate) {</span>
 <span class="cstat-no" title="statement not covered" >                    return res.status(404).json({</span>
                         status: "Not found",
-                        Message: "Project not found :)"
+                        Message: "Project not found :)",
+                        foundProjectAndUpdate
                     })
                 }
 <span class="cstat-no" title="statement not covered" >                return res.status(200).json({</span>
@@ -529,7 +535,7 @@ export default class ProjectsController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-08T16:49:52.954Z
+                at 2024-03-30T07:59:03.396Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

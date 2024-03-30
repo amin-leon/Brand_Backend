@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.7% </span>
+                <span class="strong">90.27% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>61/68</span>
+                <span class='fraction'>65/72</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">89.7% </span>
+                <span class="strong">90.14% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>61/68</span>
+                <span class='fraction'>64/71</span>
             </div>
         
             
@@ -285,7 +285,14 @@
 <a name='L220'></a><a href='#L220'>220</a>
 <a name='L221'></a><a href='#L221'>221</a>
 <a name='L222'></a><a href='#L222'>222</a>
-<a name='L223'></a><a href='#L223'>223</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L223'></a><a href='#L223'>223</a>
+<a name='L224'></a><a href='#L224'>224</a>
+<a name='L225'></a><a href='#L225'>225</a>
+<a name='L226'></a><a href='#L226'>226</a>
+<a name='L227'></a><a href='#L227'>227</a>
+<a name='L228'></a><a href='#L228'>228</a>
+<a name='L229'></a><a href='#L229'>229</a>
+<a name='L230'></a><a href='#L230'>230</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
@@ -380,6 +387,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -404,7 +412,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -415,6 +428,7 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -585,15 +599,15 @@ export default class BlogsController {
 &nbsp;
     static async deleteBlog(req: Request, res: Response) {
         try {
-            const {id} = req.params;
+            const { id } = req.params;
             const foundBlog = await Blogs.findById(id)
-            if(!foundBlog){
+            if (!foundBlog) {
                 return res.status(404).json({
                     status: "Not found",
-                    Message:"Blog not found"
+                    Message: "Blog with ID not found"
                 })
             }
-&nbsp;
+    
             // remove this blog with id
             await Blogs.findByIdAndDelete(id);
             return res.status(200).json({
@@ -601,58 +615,65 @@ export default class BlogsController {
                 Message: "Blog deleted successfully",
             })
         } catch (error) {
+            console.error(error);
             return res.status(500).json({
                 status: "Fail",
-                Message: "Fail to delete blog"
+                Message: "Failed to delete blog"
             })
         }
     }
+    
 &nbsp;
-    // like a blog
+// like a blog
+static async likeBlog(req: Request, res: Response) {
+    try {
+        const { email } = req.body;
+        const { id } = req.params;
 &nbsp;
-    static async likeBlog(req: Request, res: Response) {
-        try {
-            const {email}  = req.body;
-            const {id} = req.params;
-    
-            // find blog
-            const foundBlog = await Blogs.findById(id)
-            if(!foundBlog){
-                return res.status(404).json({
-                    status: "Not found",
-                    Message: "Blog Not found"
-                })
-            }
-    
-            const hasLiked = foundBlog.likes.includes(email);
-            if(hasLiked) {
-                return res.status(403).json({
-                    status: "Forbidden",
-                    Message: "You have already liked to this blog :)"
-                })
-            }
-    
-            // like
-            foundBlog.likes.push(email)
-            await foundBlog.save()
-    
+        // find blog
+        const foundBlog = await Blogs.findById(id)
+        if (!foundBlog) {
+            return res.status(404).json({
+                status: "Not found",
+                Message: "Blog Not found"
+            })
+        }
+&nbsp;
+        const hasLiked = foundBlog.likes.includes(email);
+        if (hasLiked) {
+            // Remove email from likes array
+            foundBlog.likes = foundBlog.likes.filter(e =&gt; e !== email);
+            await foundBlog.save();
+&nbsp;
             return res.status(200).json({
                 status: "OK",
-                Message: "You liked Blog"
-            })
-        } catch (error) {
-            return res.status(500).json({
-                status: "Fail",
-                Message: "Oops! , unable to like"
-            })
+                Message: "You unliked Blog",
+                foundBlog
+            });
         }
+&nbsp;
+        // like
+        foundBlog.likes.push(email)
+        await foundBlog.save()
+&nbsp;
+        return res.status(200).json({
+            status: "OK",
+            Message: "You liked Blog",
+            foundBlog
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: "Fail",
+            Message: "Oops! , unable to like"
+        })
     }
+}
+&nbsp;
 &nbsp;
     // comment
-&nbsp;
     static async commentBlog(req: Request, res: Response) {
         try {
-            const {email, comment}  = req.body;
+            const {email, comment, posterNames}  = req.body;
             const {id} = req.params;
     
             // find blog
@@ -670,7 +691,7 @@ export default class BlogsController {
                     Message: "Missing value for fields"
                 })
             }
-            foundBlog.comments.push({email, comment});
+            foundBlog.comments.push({email, comment, posterNames});
             await foundBlog.save()
     
             return res.status(200).json({
@@ -736,7 +757,7 @@ export default class BlogsController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-08T16:49:52.954Z
+                at 2024-03-30T07:59:03.396Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
