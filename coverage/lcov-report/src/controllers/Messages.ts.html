@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.09% </span>
+                <span class="strong">36.58% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>23/41</span>
+                <span class='fraction'>15/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">28.57% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>2/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">56.09% </span>
+                <span class="strong">36.58% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>23/41</span>
+                <span class='fraction'>15/41</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -248,8 +248,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -260,7 +260,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -268,13 +268,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -379,9 +379,9 @@ export default class MessagesController {
     }
     
     // Get all Messages
-    static async getAllMessages(req: Request, res: Response) {
-        try {
-          const allMessages = await Messages.find();
+<span class="fstat-no" title="function not covered" >    static </span>async getAllMessages(req: Request, res: Response) {
+<span class="cstat-no" title="statement not covered" >        try {</span>
+          const allMessages = <span class="cstat-no" title="statement not covered" >await Messages.find();</span>
 <span class="cstat-no" title="statement not covered" >          <span class="missing-if-branch" title="if path not taken" >I</span>if(!allMessages){</span>
 <span class="cstat-no" title="statement not covered" >            return res.status(404).json({</span>
                 Message: "No Message  :)"
@@ -392,21 +392,21 @@ export default class MessagesController {
             content: allMessages,
           });
         } catch (error) {
-           return res.status(500).json({
+<span class="cstat-no" title="statement not covered" >           return res.status(500).json({</span>
             message: "Fail to Fetch Message :)",
           });
         }
       }
     
     // delete message
-    static async deleteMessage(req: Request, res: Response){
-        try {
-            const {id} = req.params;
+<span class="fstat-no" title="function not covered" >    static </span>async deleteMessage(req: Request, res: Response){
+<span class="cstat-no" title="statement not covered" >        try {</span>
+            const {id} = <span class="cstat-no" title="statement not covered" >req.params;</span>
 &nbsp;
             // check if user exist
-            const existMessage = await Messages.findById(id);
-            if(!existMessage){
-               return res.status(404).json({
+            const existMessage = <span class="cstat-no" title="statement not covered" >await Messages.findById(id);</span>
+<span class="cstat-no" title="statement not covered" >            <span class="missing-if-branch" title="if path not taken" >I</span>if(!existMessage){</span>
+<span class="cstat-no" title="statement not covered" >               return res.status(404).json({</span>
                     Message: "Message not Found"
                 })
             }
@@ -466,7 +466,7 @@ export default class MessagesController {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-30T07:59:03.396Z
+                at 2024-03-30T11:39:14.207Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.27% </span>
+                <span class="strong">54.54% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>17/22</span>
+                <span class='fraction'>12/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>1/3</span>
+                <span class='fraction'>0/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>1/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.27% </span>
+                <span class="strong">54.54% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>17/22</span>
+                <span class='fraction'>12/22</span>
             </div>
         
             
@@ -118,7 +118,11 @@
 <a name='L53'></a><a href='#L53'>53</a>
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
-<a name='L56'></a><a href='#L56'>56</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,96 +150,104 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-yes">13x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Request, Response, NextFunction } from "express";
-import jwt, {Secret}  from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import dotenv from 'dotenv';
 &nbsp;
-dotenv.config()
+dotenv.config();
 &nbsp;
-interface AddUserToRequest extends Request{
+interface AddUserToRequest extends Request {
     user?: any;
 }
 &nbsp;
-export default class AuthVerify{
-    static async isAuthenticated(req: AddUserToRequest, res: Response, next: NextFunction){
+export default class AuthVerify {
+    static async isAuthenticated(req: AddUserToRequest, res: Response, next: NextFunction) {
         try {
             const { authorization }: any = req.headers;
-            <span class="missing-if-branch" title="if path not taken" >I</span>if(!authorization){
-<span class="cstat-no" title="statement not covered" >                res.status(401).json({</span>
-                    Message: "Access Denied!"
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!authorization) {
+<span class="cstat-no" title="statement not covered" >                return res.status(401).json({</span>
+                    Message: "No token provided in header"
                 });
             }
 &nbsp;
             const token = authorization.split(" ")[1];
 &nbsp;
-            <span class="missing-if-branch" title="if path not taken" >I</span>if(!token) {
-<span class="cstat-no" title="statement not covered" >                res.status(401).json({</span>
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!token) {
+<span class="cstat-no" title="statement not covered" >                return res.status(401).json({</span>
                     Message: "Unauthorized action"
-                })
+                });
             }
-            // Verify token
-            const secretKey: Secret = process.env.SECRET_KEY as string;
-            const user = jwt.verify(token, secretKey);
-            req.user = user;
 &nbsp;
-            next()
+            // Verify token
+            const secretKey: Secret = process.env.SECRET_KEY as Secret;
+            const user = jwt.verify(token, secretKey) as any;
+<span class="cstat-no" title="statement not covered" >            req.user = user;</span>
+            
+            // Call next middleware
+<span class="cstat-no" title="statement not covered" >            return next();</span>
         } catch (error: any) {
-<span class="cstat-no" title="statement not covered" >             res.status(500).json({</span>
+            return res.status(500).json({
                 status: "Fail",
-                Message: "Invalid  or Expired, Login again"
-            })
+                Message: "Invalid or expired token, login again"
+            });
         }
     }
 &nbsp;
-    // ckeck role
-    static async checkRole(req: AddUserToRequest, res: Response, next: NextFunction){
-        try {
-            const user = req.user;
-            if(user.role == "Admin"){
-               return next()
+<span class="fstat-no" title="function not covered" >    static </span>async checkRole(req: AddUserToRequest, res: Response, next: NextFunction) {
+<span class="cstat-no" title="statement not covered" >        try {</span>
+            const user = <span class="cstat-no" title="statement not covered" >req.user;</span>
+<span class="cstat-no" title="statement not covered" >            <span class="missing-if-branch" title="if path not taken" >I</span>if (user.role === "admin") {</span>
+<span class="cstat-no" title="statement not covered" >                return next();</span>
             }
-<span class="cstat-no" title="statement not covered" >            res.status(403).json({</span>
+<span class="cstat-no" title="statement not covered" >            return res.status(403).json({</span>
                 message: "Only admin can access this route"
             });
         } catch (error: any) {
-<span class="cstat-no" title="statement not covered" >                console.log(error);</span>
+<span class="cstat-no" title="statement not covered" >            return res.status(500).json({</span>
+                Message: "Fail to verify role"
+            });
         }
     }
-}</pre></td></tr></table></pre>
+}
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-03-08T16:49:52.954Z
+                at 2024-03-30T11:39:14.207Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
