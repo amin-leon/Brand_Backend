@@ -120,7 +120,6 @@ static async getSkillById(req: Request, res: Response) {
     }
 }
 
-
     
     // Get all Skills
     static async getAllSkills(req: Request, res: Response) {

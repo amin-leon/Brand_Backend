@@ -38,7 +38,6 @@ export default class MessagesController {
                 Message: "Message sent!",
             });
         } catch (error) {
-            console.log(error)
             return res.status(500).json({
                 Message: "Message not sent :)",
                 

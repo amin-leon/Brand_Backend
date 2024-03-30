@@ -21,7 +21,7 @@ describe("Messages Controller", () =>{
                 });
     
             expect(res.status).toBe(201);
-            expect(res.body.Message).toBe("Message sent !");
+            expect(res.body.Message).toBe("Message sent!");
         });
     
         it("should return 400 if request body is invalid", async () => {

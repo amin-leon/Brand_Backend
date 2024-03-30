@@ -52,13 +52,13 @@ export default class ProjectsController {
 
 
                 // validations
-                const { error } = projectSchema.validate({title, description, category, image, link});
-                if (error) {
-                    return res.status(400).json({
-                        status: "Bad Request",
-                        message: error.details[0].message,
-                    });
-                }
+                // const { error } = projectSchema.validate({title, description, category, image, link});
+                // if (error) {
+                //     return res.status(400).json({
+                //         status: "Bad Request",
+                //         message: error.details[0].message,
+                //     });
+                // }
     
                 // find related blog
                 const foundProjectAndUpdate = await Projects.findByIdAndUpdate(id, {title, description, category, image, link}, {new: true});
@@ -115,18 +115,18 @@ export default class ProjectsController {
     // Get all users
     static async getAllProjects(req: Request, res: Response) {
         try {
-          const allprojects = await Projects.find().select("-password");
-          if(!allprojects){
-            res.status(404).json({
-                Message: "No Project Found :)"
-            })
-          }
-           res.status(200).json({
+          const allprojects = await Projects.find();
+          if (allprojects.length === 0) {
+            return res.status(404).json({
+                Message: "No Projects found :)"
+            });
+        }
+           return res.status(200).json({
             status: "success",
             data: allprojects,
           });
         } catch (error) {
-          res.status(500).json({
+          return res.status(500).json({
             status: "status",
             message: "Unable to display Projects:)",
           });
