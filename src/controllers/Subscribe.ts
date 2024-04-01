@@ -27,7 +27,7 @@ export default class SubscribersController {
             // save sub 
             await newSub.save();
             return res.status(500).json({
-                Message: "Your Subscribution sent !",
+                Message: "Your Subscribution not sent !",
             })
         } catch (error) {
            return res.status(500).json({
@@ -65,7 +65,7 @@ export default class SubscribersController {
             const existSub = await Subscribers.findById(id);
             if(!existSub){
                return res.status(404).json({
-                    Message: "Message not Found"
+                    Message: "Subs not Found"
                 })
             }
 
