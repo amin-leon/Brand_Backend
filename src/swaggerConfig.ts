@@ -3,7 +3,7 @@ import { userRouteDocs } from './docs/userRegistration';
 import {blogsRoutesDocs} from './docs/blogsRoutesDocs'
 import {subscribeRoutesDocs} from './docs/subscribeRoutesDocs'
 import {messageDocs} from './docs/messagesRoutesDocs'
-
+import {projectDocs} from './docs/projectsRoutesDocs'
 
 
 const options: swaggerJsdoc.Options = {
@@ -27,7 +27,8 @@ const options: swaggerJsdoc.Options = {
             ...userRouteDocs,
             ...blogsRoutesDocs,
             ...subscribeRoutesDocs,
-            ...messageDocs
+            ...messageDocs,
+            ...projectDocs
         },
     },
     apis: ['./routes/*.ts'],

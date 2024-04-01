@@ -43,7 +43,7 @@ export default class ProjectsController {
         }
     }
 
-        // Update project
+    // Update project
         static async updateProject(req: Request, res: Response) {
             try {
                 const {title, description, category, link}: ProjectTypes = req.body;
