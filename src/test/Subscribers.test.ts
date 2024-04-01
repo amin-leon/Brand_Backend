@@ -91,11 +91,7 @@ describe("Subscribers Controller", () =>{
     
 
     describe('Delete sub - /DELETE', () => {
-        // beforeEach(async () => {
-        //     await Messages.deleteMany({});
-        // });
         it('should return status code 200 if sub is deleted successfully', async () => {
-            // Insert test data into the database
             const newMessage = await Subs.create({ email: 'test@example.com' });
 
              

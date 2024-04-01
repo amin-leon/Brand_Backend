@@ -159,7 +159,7 @@ export default class UsersController {
 
         } catch (error: any) {
           return res.status(500).json({
-                Message: error.message
+                Message: "Fail to delete user"
             })
         }
     }
