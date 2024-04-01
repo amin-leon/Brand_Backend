@@ -452,6 +452,86 @@ const getSingleUser = {
 };
 
 
+const loginUser = {
+    tags: ['User'],
+    description: "Login a user",
+    requestBody: {
+        required: true,
+        content: {
+            "application/json": {
+                schema: {
+                    type: "object",
+                    properties: {
+                        email: { type: "string", example: "example@example.com" },
+                        password: { type: "string", example: "password123" }
+                    },
+                    required: ["email", "password"]
+                }
+            }
+        }
+    },
+    responses: {
+        200: {
+            description: "OK",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            Message: { type: "string", example: "Login successful" },
+                            user: { type: "object" },
+                            token: { type: "string" } 
+                        }
+                    }
+                }
+            }
+        },
+        401: {
+            description: "Unauthorized",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            message: { type: "string", example: "Password incorrect :)" }
+                        }
+                    }
+                }
+            }
+        },
+        404: {
+            description: "Not found",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", example: "Fail" },
+                            Message: { type: "string", example: "Account does not exist" }
+                        }
+                    }
+                }
+            }
+        },
+        500: {
+            description: "Internal server error",
+            content: {
+                "application/json": {
+                    schema: {
+                        type: "object",
+                        properties: {
+                            status: { type: "string", example: "Bad request" },
+                            Message: { type: "string", example: "Fail to login" }
+                        }
+                    }
+                }
+            }
+        }
+    }
+};
+
+
+
 export const userRouteDocs = {
     "/users/register": {
         post: userRegistration
@@ -473,7 +553,10 @@ export const userRouteDocs = {
     },
     "/users/user/{id}": {
         get: getSingleUser
-    }
+    },
+    "/login": {
+        post: loginUser
+    },
 };
 
 
