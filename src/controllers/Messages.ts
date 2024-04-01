@@ -92,8 +92,8 @@ export default class MessagesController {
         }
     }
 
-        // Read message
-            static async readMessage(req: Request, res: Response) {
+    // Read message
+     static async readMessage(req: Request, res: Response) {
                 try {
                     const { read } = req.body;
                     const { id } = req.params;
@@ -125,4 +125,4 @@ export default class MessagesController {
                     });
                 }
             }
-        }
+    }
