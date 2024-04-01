@@ -56,7 +56,7 @@ export default class UsersController {
     // Get all users
     static async getAllUsers(req: Request, res: Response) {
         try {
-          const allusers = await Users.find();
+          const allusers = await Users.find().select("-password");
           if(!allusers){
             res.status(404).json({
                 Message: "No User Found :)"
@@ -79,16 +79,16 @@ export default class UsersController {
           const {id} = req.params;
           const singleUser = await Users.findOne({_id: id}).select("-password");
           if(!singleUser){
-            res.status(404).json({
+            return res.status(404).json({
                 Message: "No User Found :)"
             })
           }
-           res.status(200).json({
+          return res.status(200).json({
             status: "success",
             userInfo: singleUser,
           });
         } catch (error: any) {
-          res.status(500).json({
+          return res.status(500).json({
             message: "Fail to fecth user",
           });
         }
@@ -99,6 +99,13 @@ export default class UsersController {
         try {
            const updatedInfo: User = req.body;
           const {id} = req.params;
+
+          const existanceOfuser = await Users.findOne({id: id});
+          if(!existanceOfuser){
+              return res.status(404).json({
+                  Message: "User not found !"
+              })
+          }
 
           if(updatedInfo.password){
             updatedInfo.password = bcrypt.hashSync(updatedInfo.password, 10);
@@ -112,7 +119,6 @@ export default class UsersController {
             })
           }
           
-
           const updatedUser = await Users.findByIdAndUpdate(id, updatedInfo, {new: true});
           if(!updatedUser){
             return res.status(404).json({

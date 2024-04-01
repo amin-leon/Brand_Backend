@@ -9,6 +9,9 @@ import SkillsRoutes from './routes/Skills';
 import MessagesRoutes from './routes/Messages';
 import SubsRoutes from './routes/Subs';
 import cors from 'cors';
+import { swaggerSpec } from './swaggerConfig';
+import swaggerUi from 'swagger-ui-express';
+
 
 export const app = express();
 
@@ -22,6 +25,10 @@ const isTestEnv = process.env.NODE_ENV === 'test';
 const dbConnectionString = isTestEnv ? process.env.MONGODB_URI_TEST : process.env.MONGODB_URI;
 
 connectDB(dbConnectionString);
+
+// swagger
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 // routes
 app.use('/users', UsersRoutes);
