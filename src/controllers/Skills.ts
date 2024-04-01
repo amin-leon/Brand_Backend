@@ -41,8 +41,8 @@ export default class SkillsController {
         }
     }
 
-        // Update Skill
-        static async updateSkill(req: Request, res: Response) {
+    // Update Skill
+    static async updateSkill(req: Request, res: Response) {
             try {
                 const {title, description, percent}: SkillsTypes = req.body;
                 const {id}  = req.params;
@@ -69,7 +69,7 @@ export default class SkillsController {
                     }
                 )
             }
-        }
+    }
 
     // Skill delete
     static async deleteSkill(req: Request, res: Response) {
@@ -122,7 +122,7 @@ static async getSkillById(req: Request, res: Response) {
 
     
     // Get all Skills
-    static async getAllSkills(req: Request, res: Response) {
+static async getAllSkills(req: Request, res: Response) {
         try {
           const allSkills = await Skills.find();
           if (allSkills.length === 0) {
