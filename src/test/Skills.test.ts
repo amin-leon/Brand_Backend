@@ -15,7 +15,8 @@ describe('Skills Controller', () => {
         .send({
           title: 'Test Blog',
           description: 'This is a test skill',
-          percent: 90
+          percent: 90,
+          icon: "omgae.png"
         });
   
       // Assert the response
@@ -47,7 +48,8 @@ describe('Skills Controller', () => {
       .send({
         title: 'Test Blog',
         description: 'This is a test skill',
-        percent: 90
+        percent: 90,
+        icon: "imga.png"
       });
 
     expect(res.status).toBe(500);

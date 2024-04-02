@@ -100,10 +100,10 @@ export default class UsersController {
            const updatedInfo: User = req.body;
           const {id} = req.params;
 
-          const existanceOfuser = await Users.findOne({id: id});
+          const existanceOfuser = await Users.findById(id);
           if(!existanceOfuser){
               return res.status(404).json({
-                  Message: "User not found !"
+                  Message: "User not found !",
               })
           }
 
